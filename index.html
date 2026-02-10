@@ -108,16 +108,20 @@ Cada foto aqui é um pedaço do que eu quero continuar vivendo com você.
 </div>
     
 <script>
-function entrar(){
+document.getElementById("botaoEntrar").addEventListener("click", function () {
     document.getElementById("entrada").style.display = "none";
 
-    const iframe = document.getElementById("musica");
-    iframe.src += "?autoplay=1";
-}
+    const musica = document.getElementById("musica");
+    if (musica) {
+        musica.src += "?autoplay=1";
+    }
+});
 </script>
+
 
 </body>
 </html>
+
 
 
 
