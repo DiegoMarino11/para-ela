@@ -105,12 +105,28 @@ Cada foto aqui é um pedaço do que eu quero continuar vivendo com você.
 
 <audio id="musica">
   <source src="suaslinhas.mp3" type="audio/mpeg">
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const botao = document.getElementById("botaoEntrar");
+  const entrada = document.getElementById("entrada");
+  const musica = document.getElementById("musica");
+
+  botao.addEventListener("click", function () {
+    entrada.style.display = "none";
+    musica.play();
+  });
+
+});
+</script>
+
 </audio>
 
 
 </div>
 </body>
 </html>
+
 
 
 
