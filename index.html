@@ -32,9 +32,11 @@ h1{
 
 .carrossel{
     position: relative;
-    max-width: 360px;
+    width: 100%;
+    max-width: 480px;
     margin: 0 auto 40px;
 }
+
 
 .carrossel img{
     width: 100%;
@@ -61,11 +63,12 @@ h1{
 .nav.right{ right: -10px; }
 @media (max-width: 768px){
   .carrossel{
-    max-width: 90%;
+    width: 100%;
+    max-width: 100%;
   }
 
   .carrossel img{
-    height: 380px;
+    height: 420px;
   }
 
   h1{
@@ -73,6 +76,20 @@ h1{
   }
 }
 
+    
+.player{
+    margin-top: 20px;
+}
+
+#playPause{
+    font-size: 22px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background: rgba(255,255,255,0.15);
+    color: white;
+}
 
 </style>
 </head>
@@ -131,6 +148,10 @@ Cada foto aqui é um pedaço do que eu quero continuar vivendo com você.
 <audio id="musica">
   <source src="suaslinhas.mp3" type="audio/mpeg">
 </audio>
+<div class="player">
+    <button id="playPause">⏸️</button>
+</div>
+   
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -138,10 +159,23 @@ document.addEventListener("DOMContentLoaded", function () {
   const entrada = document.getElementById("entrada");
   const musica = document.getElementById("musica");
 
-  botao.addEventListener("click", function () {
-    entrada.style.display = "none";
+  const playPause = document.getElementById("playPause");
+
+botao.addEventListener("click", function () {
+  entrada.style.display = "none";
+  musica.play();
+  playPause.innerText = "⏸️";
+});
+
+playPause.addEventListener("click", function () {
+  if (musica.paused) {
     musica.play();
-  });
+    playPause.innerText = "⏸️";
+  } else {
+    musica.pause();
+    playPause.innerText = "▶️";
+  }
+});
 
 });
 </script>
@@ -190,6 +224,7 @@ iniciarAutoplay();
 </script>
 </body>
 </html>
+
 
 
 
