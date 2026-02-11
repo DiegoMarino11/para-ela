@@ -19,18 +19,6 @@ body{
     padding:40px;
 }
 
-img{
-    width:260px;
-    height:360px;
-    object-fit:cover;
-    border-radius:18px;
-    margin:10px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.4);
-    transition:0.3s;
-    display:inline-block;
-}
-
-
 h1{
     margin-top:20px;
     font-size:32px;
@@ -40,6 +28,50 @@ h1{
     opacity:0.85;
     margin-bottom:30px;
 }
+/* ===== CARROSSEL ===== */
+
+.carrossel{
+    position: relative;
+    max-width: 360px;
+    margin: 0 auto 40px;
+}
+
+.carrossel img{
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    border-radius: 18px;
+}
+
+.nav{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    font-size: 28px;
+    padding: 10px 16px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.nav.left{ left: -10px; }
+.nav.right{ right: -10px; }
+@media (max-width: 768px){
+  .carrossel{
+    max-width: 90%;
+  }
+
+  .carrossel img{
+    height: 380px;
+  }
+
+  h1{
+    font-size: 26px;
+  }
+}
+
 
 </style>
 </head>
@@ -83,23 +115,15 @@ Entrar
 Cada foto aqui é um pedaço do que eu quero continuar vivendo com você.
 </p>
 
-<img src="foto1.jpg">
-<img src="foto10.jpeg">
-<img src="foto11.jpeg">
-<img src="foto12.jpeg">
-<img src="foto13.jpeg">
-<img src="foto14.jpeg">
-<img src="foto15.jpeg">
-<img src="foto16.jpeg">
-<img src="foto17.jpeg">
-<img src="foto2.jpeg">
-<img src="foto3.jpeg">
-<img src="foto4.jpeg">
-<img src="foto5.jpeg">
-<img src="foto6.jpeg">
-<img src="foto7.jpeg">
-<img src="foto8.jpeg">
-<img src="foto9.jpeg">
+<div class="carrossel">
+
+    <button class="nav left" onclick="anterior()">‹</button>
+
+    <img id="fotoAtual" src="foto1.jpg">
+
+    <button class="nav right" onclick="proxima()">›</button>
+
+</div>
 
 <br><br>
 
@@ -120,8 +144,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script>
+    
+<script>
+const fotos = [
+  "foto1.jpg",
+  "foto2.jpeg","foto3.jpeg","foto4.jpeg","foto5.jpeg",
+  "foto6.jpeg","foto7.jpeg","foto8.jpeg","foto9.jpeg",
+  "foto10.jpeg","foto11.jpeg","foto12.jpeg","foto13.jpeg",
+  "foto14.jpeg","foto15.jpeg","foto16.jpeg","foto17.jpeg"
+];
+
+let indice = 0;
+
+function atualizarFoto(){
+  document.getElementById("fotoAtual").src = fotos[indice];
+}
+
+function proxima(){
+  indice = (indice + 1) % fotos.length;
+  atualizarFoto();
+}
+
+function anterior(){
+  indice = (indice - 1 + fotos.length) % fotos.length;
+  atualizarFoto();
+}
+</script>
 </body>
 </html>
+
 
 
 
