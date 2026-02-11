@@ -39,7 +39,8 @@ h1{
 .carrossel img{
     width: 100%;
     height: 420px;
-    object-fit: cover;
+    object-fit: contain;
+    background: rgba(0,0,0,0.25);
     border-radius: 18px;
 }
 
@@ -155,6 +156,7 @@ const fotos = [
 ];
 
 let indice = 0;
+let intervalo;
 
 function atualizarFoto(){
   document.getElementById("fotoAtual").src = fotos[indice];
@@ -163,15 +165,32 @@ function atualizarFoto(){
 function proxima(){
   indice = (indice + 1) % fotos.length;
   atualizarFoto();
+  reiniciarAutoplay();
 }
 
 function anterior(){
   indice = (indice - 1 + fotos.length) % fotos.length;
   atualizarFoto();
+  reiniciarAutoplay();
 }
+
+function iniciarAutoplay(){
+  intervalo = setInterval(() => {
+    proxima();
+  }, 4000); // 4 segundos
+}
+
+function reiniciarAutoplay(){
+  clearInterval(intervalo);
+  iniciarAutoplay();
+}
+
+// inicia automaticamente
+iniciarAutoplay();
 </script>
 </body>
 </html>
+
 
 
 
