@@ -91,6 +91,27 @@ h1{
     color: white;
 }
 
+.coracao{
+    position: fixed;
+    bottom: -20px;
+    font-size: 24px;
+    animation: subir 2.5s ease-out forwards;
+    color: #ff6b81;
+    pointer-events: none;
+}
+
+@keyframes subir{
+    from{
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to{
+        transform: translateY(-120vh);
+        opacity: 0;
+    }
+}
+
+
 </style>
 </head>
 
@@ -161,11 +182,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const playPause = document.getElementById("playPause");
 
+function soltarCoracoes(){
+  for(let i = 0; i < 20; i++){
+    const c = document.createElement("div");
+    c.className = "coracao";
+    c.innerText = "❤️";
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.animationDuration = (2 + Math.random() * 2) + "s";
+    document.body.appendChild(c);
+
+    setTimeout(() => {
+      c.remove();
+    }, 3000);
+  }
+}
+
+
 botao.addEventListener("click", function () {
-  entrada.style.display = "none";
-  musica.play();
-  playPause.innerText = "⏸️";
+  soltarCoracoes();
+
+  setTimeout(() => {
+    entrada.style.display = "none";
+    musica.play();
+    playPause.innerText = "⏸️";
+  }, 1200);
 });
+
 
 playPause.addEventListener("click", function () {
   if (musica.paused) {
@@ -224,6 +266,7 @@ iniciarAutoplay();
 </script>
 </body>
 </html>
+
 
 
 
