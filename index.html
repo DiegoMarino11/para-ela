@@ -14,7 +14,7 @@ body{
     background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
     background-size: 400% 400%;
     animation: fundoAnimado 18s ease infinite;
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     color:white;
     text-align:center;
     overflow-x:hidden;
@@ -36,6 +36,7 @@ body{
     opacity:0.3;
     border-radius:50%;
     animation: piscar 4s infinite ease-in-out;
+    pointer-events:none;
 }
 
 @keyframes piscar{
@@ -43,10 +44,37 @@ body{
     50%{opacity:0.8}
 }
 
+/* ===== TELA INICIAL ===== */
+
+#entrada{
+    position:fixed;
+    inset:0;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+    padding:20px;
+}
+
+#botaoEntrar{
+    padding:15px 30px;
+    font-size:18px;
+    border:none;
+    border-radius:30px;
+    cursor:pointer;
+    margin-top:20px;
+    background:white;
+    color:#203a43;
+    width:200px;
+    max-width:80%;
+}
+
 /* ===== TEXTOS ===== */
 
 h1{
-    margin-top:20px;
+    margin-top:30px;
     font-size:36px;
     line-height:1.3;
     font-weight:600;
@@ -55,9 +83,11 @@ h1{
 
 .frase{
     opacity:0.9;
-    margin-bottom:30px;
+    margin:20px auto 30px;
     font-size:18px;
     line-height:1.5;
+    max-width:600px;
+    padding:0 15px;
 }
 
 /* ===== CARROSSEL ===== */
@@ -67,11 +97,12 @@ h1{
     width:100%;
     max-width:480px;
     margin:0 auto 20px;
-    height:420px;
+    aspect-ratio: 3 / 4;
 }
 
 .carrossel .foto{
     position:absolute;
+    inset:0;
     width:100%;
     height:100%;
     object-fit:contain;
@@ -92,15 +123,17 @@ h1{
     background:rgba(0,0,0,0.5);
     color:white;
     border:none;
-    font-size:28px;
-    padding:10px 16px;
+    font-size:26px;
+    padding:8px 14px;
     cursor:pointer;
     border-radius:50%;
     z-index:10;
 }
 
-.nav.left{ left:-10px; }
-.nav.right{ right:-10px; }
+.nav.left{ left:10px; }
+.nav.right{ right:10px; }
+
+/* Indicadores */
 
 .indicadores{
     margin-top:10px;
@@ -128,7 +161,7 @@ h1{
 }
 
 #playPause{
-    font-size:22px;
+    font-size:20px;
     padding:10px 20px;
     border:none;
     border-radius:20px;
@@ -157,17 +190,20 @@ h1{
     }
 }
 
-/* Rodapé */
+/* ===== RODAPÉ ===== */
 
 .rodape{
-    margin-top:40px;
+    margin:40px 0 20px;
     font-size:14px;
     opacity:0.6;
 }
 
+/* ===== RESPONSIVO ===== */
+
 @media(max-width:768px){
-  h1{font-size:30px;}
-  .frase{padding:0 10px;}
+  h1{font-size:28px;}
+  .frase{font-size:16px;}
+  .carrossel{max-width:95%;}
 }
 
 </style>
@@ -175,31 +211,10 @@ h1{
 
 <body>
 
-<div id="entrada" style="
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-z-index:9999;
-color:white;text-align:center;">
-
-<h2>Antes de continuar…</h2>
-<p>tem algo aqui que eu fiz pensando em você</p>
-
-<button id="botaoEntrar" style="
-padding:15px 30px;
-font-size:18px;
-border:none;
-border-radius:30px;
-cursor:pointer;
-margin-top:20px;">
-Entrar
-</button>
-
+<div id="entrada">
+  <h2>Antes de continuar…</h2>
+  <p>tem algo aqui que eu fiz pensando em você</p>
+  <button id="botaoEntrar">Entrar</button>
 </div>
 
 <h1>Eu te escolhi. E continuo escolhendo.</h1>
@@ -210,10 +225,8 @@ Cada foto aqui é um pedaço do que eu quero continuar vivendo com você.
 
 <div class="carrossel">
     <button class="nav left" onclick="anterior()">‹</button>
-
     <img id="fotoA" class="foto ativa" src="foto1.jpg">
-    <img id="fotoB" class="foto" src="">
-
+    <img id="fotoB" class="foto">
     <button class="nav right" onclick="proxima()">›</button>
 </div>
 
@@ -255,7 +268,7 @@ function fadeInAudio(){
     },200);
 }
 
-/* 💖 Corações variados e desordenados */
+/* 💖 Corações variados */
 function soltarCoracoes(){
 
   const emojis=["❤️","💖","💘","💝","💕","💗","💞"];
@@ -271,14 +284,12 @@ function soltarCoracoes(){
 
     const duracao=5+Math.random()*5;
     c.style.animationDuration=duracao+"s";
-
     c.style.animationDelay=Math.random()*2+"s";
 
     const deslocamento=(Math.random()*100-50)+"px";
     c.style.setProperty("--deslocamento",deslocamento);
 
     document.body.appendChild(c);
-
     setTimeout(()=>c.remove(),duracao*1000+2000);
   }
 }
