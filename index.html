@@ -7,11 +7,13 @@
 
 <style>
 
+/* ===== FUNDO ===== */
+
 body{
     margin:0;
     background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
     background-size: 400% 400%;
-    animation: fundoAnimado 15s ease infinite;
+    animation: fundoAnimado 18s ease infinite;
     font-family: Arial;
     color:white;
     text-align:center;
@@ -19,26 +21,29 @@ body{
 }
 
 @keyframes fundoAnimado{
-    0%{ background-position: 0% 50%; }
-    50%{ background-position: 100% 50%; }
-    100%{ background-position: 0% 50%; }
+    0%{ background-position:0% 50%; }
+    50%{ background-position:100% 50%; }
+    100%{ background-position:0% 50%; }
 }
 
-/* 🌌 Partículas suaves */
+/* 🌌 Estrelas */
+
 .estrela{
-    position: fixed;
-    width: 2px;
-    height: 2px;
-    background: white;
-    opacity: 0.4;
-    border-radius: 50%;
-    animation: piscar 3s infinite ease-in-out;
+    position:fixed;
+    width:2px;
+    height:2px;
+    background:white;
+    opacity:0.3;
+    border-radius:50%;
+    animation: piscar 4s infinite ease-in-out;
 }
 
 @keyframes piscar{
-    0%,100%{ opacity:0.2 }
-    50%{ opacity:0.8 }
+    0%,100%{opacity:0.2}
+    50%{opacity:0.8}
 }
+
+/* ===== TEXTOS ===== */
 
 h1{
     margin-top:20px;
@@ -62,15 +67,22 @@ h1{
     width:100%;
     max-width:480px;
     margin:0 auto 20px;
+    height:420px;
 }
 
-.carrossel img{
+.carrossel .foto{
+    position:absolute;
     width:100%;
-    height:420px;
+    height:100%;
     object-fit:contain;
     background:rgba(0,0,0,0.25);
     border-radius:18px;
-    transition:opacity 0.6s ease;
+    opacity:0;
+    transition:opacity 0.8s ease;
+}
+
+.carrossel .foto.ativa{
+    opacity:1;
 }
 
 .nav{
@@ -84,12 +96,12 @@ h1{
     padding:10px 16px;
     cursor:pointer;
     border-radius:50%;
+    z-index:10;
 }
 
 .nav.left{ left:-10px; }
 .nav.right{ right:-10px; }
 
-/* Indicadores */
 .indicadores{
     margin-top:10px;
 }
@@ -109,6 +121,8 @@ h1{
     transform:scale(1.2);
 }
 
+/* ===== PLAYER ===== */
+
 .player{
     margin-top:20px;
 }
@@ -123,21 +137,28 @@ h1{
     color:white;
 }
 
+/* ===== CORAÇÕES ===== */
+
 .coracao{
-    position: fixed;
-    bottom:-20px;
-    font-size:24px;
-    animation:subir 8s ease-in-out forwards;
-    color:#ff6b81;
+    position:fixed;
+    font-size:22px;
     pointer-events:none;
+    animation:subir linear forwards;
 }
 
 @keyframes subir{
-    from{ transform:translateY(0); opacity:1; }
-    to{ transform:translateY(-120vh); opacity:0; }
+    0%{
+        transform:translateY(0) translateX(0) rotate(0deg);
+        opacity:1;
+    }
+    100%{
+        transform:translateY(-120vh) translateX(var(--deslocamento)) rotate(360deg);
+        opacity:0;
+    }
 }
 
 /* Rodapé */
+
 .rodape{
     margin-top:40px;
     font-size:14px;
@@ -145,9 +166,8 @@ h1{
 }
 
 @media(max-width:768px){
-  h1{ font-size:30px; }
-  .frase{ padding:0 10px; }
-  .carrossel img{ height:420px; }
+  h1{font-size:30px;}
+  .frase{padding:0 10px;}
 }
 
 </style>
@@ -157,17 +177,15 @@ h1{
 
 <div id="entrada" style="
 position:fixed;
-top:0; left:0;
-width:100%; height:100%;
+top:0;left:0;
+width:100%;height:100%;
 background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
 z-index:9999;
-color:white;
-text-align:center;
-">
+color:white;text-align:center;">
 
 <h2>Antes de continuar…</h2>
 <p>tem algo aqui que eu fiz pensando em você</p>
@@ -185,18 +203,24 @@ Entrar
 </div>
 
 <h1>Eu te escolhi. E continuo escolhendo.</h1>
+
 <p class="frase">
 Cada foto aqui é um pedaço do que eu quero continuar vivendo com você.
 </p>
 
 <div class="carrossel">
     <button class="nav left" onclick="anterior()">‹</button>
-    <img id="fotoAtual" src="foto1.jpg">
+
+    <img id="fotoA" class="foto ativa" src="foto1.jpg">
+    <img id="fotoB" class="foto" src="">
+
     <button class="nav right" onclick="proxima()">›</button>
-    <div class="indicadores" id="indicadores"></div>
 </div>
 
+<div class="indicadores" id="indicadores"></div>
+
 <audio id="musica"></audio>
+
 <div class="player">
     <button id="playPause">⏸️</button>
 </div>
@@ -206,6 +230,9 @@ Desde 11.03.2022
 </div>
 
 <script>
+
+/* ===== INICIALIZAÇÃO ===== */
+
 document.addEventListener("DOMContentLoaded", function(){
 
 const musica = document.getElementById("musica");
@@ -215,6 +242,7 @@ const entrada = document.getElementById("entrada");
 
 musica.src="suaslinhas.mp3";
 
+/* Fade-in da música */
 function fadeInAudio(){
     musica.volume=0;
     musica.play();
@@ -227,22 +255,50 @@ function fadeInAudio(){
     },200);
 }
 
+/* 💖 Corações variados e desordenados */
+function soltarCoracoes(){
+
+  const emojis=["❤️","💖","💘","💝","💕","💗","💞"];
+
+  for(let i=0;i<30;i++){
+
+    const c=document.createElement("div");
+    c.className="coracao";
+    c.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+
+    c.style.left=Math.random()*100+"vw";
+    c.style.bottom=(Math.random()*40-20)+"px";
+
+    const duracao=5+Math.random()*5;
+    c.style.animationDuration=duracao+"s";
+
+    c.style.animationDelay=Math.random()*2+"s";
+
+    const deslocamento=(Math.random()*100-50)+"px";
+    c.style.setProperty("--deslocamento",deslocamento);
+
+    document.body.appendChild(c);
+
+    setTimeout(()=>c.remove(),duracao*1000+2000);
+  }
+}
+
 botao.addEventListener("click", function(){
-    soltarCoracoes();
-    setTimeout(()=>{
-        entrada.style.display="none";
-        fadeInAudio();
-    },1200);
+  soltarCoracoes();
+  setTimeout(()=>{
+      entrada.style.display="none";
+      fadeInAudio();
+  },1200);
 });
 
 playPause.addEventListener("click", function(){
-    if(musica.paused){
-        musica.play();
-        playPause.innerText="⏸️";
-    } else {
-        musica.pause();
-        playPause.innerText="▶️";
-    }
+  if(musica.paused){
+      musica.play();
+      playPause.innerText="⏸️";
+  } else {
+      musica.pause();
+      playPause.innerText="▶️";
+  }
 });
 
 /* Estrelas */
@@ -251,13 +307,13 @@ for(let i=0;i<40;i++){
   e.className="estrela";
   e.style.top=Math.random()*100+"vh";
   e.style.left=Math.random()*100+"vw";
-  e.style.animationDuration=(2+Math.random()*3)+"s";
+  e.style.animationDuration=(2+Math.random()*4)+"s";
   document.body.appendChild(e);
 }
 
 });
 
-/* Carrossel */
+/* ===== CARROSSEL ===== */
 
 const fotos=[
 "foto1.jpg","foto2.jpeg","foto3.jpeg","foto4.jpeg",
@@ -268,6 +324,7 @@ const fotos=[
 
 let indice=0;
 let intervalo;
+let usandoA=true;
 
 function atualizarIndicadores(){
   const pontos=document.querySelectorAll(".ponto");
@@ -276,13 +333,21 @@ function atualizarIndicadores(){
 }
 
 function atualizarFoto(){
-  const img=document.getElementById("fotoAtual");
-  img.style.opacity=0;
-  setTimeout(()=>{
-    img.src=fotos[indice];
-    img.style.opacity=1;
-    atualizarIndicadores();
-  },300);
+  const fotoA=document.getElementById("fotoA");
+  const fotoB=document.getElementById("fotoB");
+
+  if(usandoA){
+    fotoB.src=fotos[indice];
+    fotoB.classList.add("ativa");
+    fotoA.classList.remove("ativa");
+  } else {
+    fotoA.src=fotos[indice];
+    fotoA.classList.add("ativa");
+    fotoB.classList.remove("ativa");
+  }
+
+  usandoA=!usandoA;
+  atualizarIndicadores();
 }
 
 function proxima(){
@@ -317,17 +382,6 @@ window.onload=function(){
   iniciarAutoplay();
 };
 
-/* Corações */
-function soltarCoracoes(){
-  for(let i=0;i<20;i++){
-    const c=document.createElement("div");
-    c.className="coracao";
-    c.innerText="❤️";
-    c.style.left=Math.random()*100+"vw";
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),8000);
-  }
-}
 </script>
 
 </body>
