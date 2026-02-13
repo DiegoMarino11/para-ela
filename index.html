@@ -336,6 +336,7 @@ const fotos=[
 let indice=0;
 let intervalo;
 let usandoA=true;
+let animando=false;
 
 function atualizarIndicadores(){
   const pontos=document.querySelectorAll(".ponto");
@@ -344,6 +345,10 @@ function atualizarIndicadores(){
 }
 
 function atualizarFoto(){
+
+  if(animando) return;
+  animando=true;
+
   const fotoA=document.getElementById("fotoA");
   const fotoB=document.getElementById("fotoB");
 
@@ -359,41 +364,48 @@ function atualizarFoto(){
 
   usandoA=!usandoA;
   atualizarIndicadores();
+
+  setTimeout(()=>{
+    animando=false;
+  },800); // mesmo tempo da transição CSS
 }
 
 function proxima(){
   indice=(indice+1)%fotos.length;
   atualizarFoto();
-  reiniciarAutoplay();
 }
 
 function anterior(){
   indice=(indice-1+fotos.length)%fotos.length;
   atualizarFoto();
-  reiniciarAutoplay();
 }
 
 function iniciarAutoplay(){
-  intervalo=setInterval(proxima,4000);
+  intervalo=setInterval(()=>{
+    proxima();
+  },5000); // aumentei para 5s (mais suave)
 }
 
-function reiniciarAutoplay(){
+function pararAutoplay(){
   clearInterval(intervalo);
-  iniciarAutoplay();
 }
 
 window.onload=function(){
+
   const indicadores=document.getElementById("indicadores");
   fotos.forEach(()=>{
     const ponto=document.createElement("span");
     ponto.className="ponto";
     indicadores.appendChild(ponto);
   });
+
   atualizarIndicadores();
   iniciarAutoplay();
 };
+
 
 </script>
 
 </body>
 </html>
+
