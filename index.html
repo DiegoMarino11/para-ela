@@ -75,17 +75,15 @@ body{
 
 h1{
     margin-top:30px;
-    font-size:36px;
+    font-size:32px;
     line-height:1.3;
     font-weight:600;
-    letter-spacing:0.3px;
 }
 
 .frase{
     opacity:0.9;
     margin:20px auto 30px;
     font-size:18px;
-    line-height:1.5;
     max-width:600px;
     padding:0 15px;
 }
@@ -97,10 +95,10 @@ h1{
     width:100%;
     max-width:480px;
     margin:0 auto 20px;
-    aspect-ratio: 3 / 4;
+    aspect-ratio:3/4;
 }
 
-.carrossel .foto{
+.carrossel img{
     position:absolute;
     inset:0;
     width:100%;
@@ -108,12 +106,7 @@ h1{
     object-fit:contain;
     background:rgba(0,0,0,0.25);
     border-radius:18px;
-    opacity:0;
-    transition:opacity 0.8s ease;
-}
-
-.carrossel .foto.ativa{
-    opacity:1;
+    transition:opacity 0.4s ease;
 }
 
 .nav{
@@ -123,7 +116,7 @@ h1{
     background:rgba(0,0,0,0.5);
     color:white;
     border:none;
-    font-size:26px;
+    font-size:24px;
     padding:8px 14px;
     cursor:pointer;
     border-radius:50%;
@@ -190,18 +183,14 @@ h1{
     }
 }
 
-/* ===== RODAPÉ ===== */
-
 .rodape{
     margin:40px 0 20px;
     font-size:14px;
     opacity:0.6;
 }
 
-/* ===== RESPONSIVO ===== */
-
 @media(max-width:768px){
-  h1{font-size:28px;}
+  h1{font-size:26px;}
   .frase{font-size:16px;}
   .carrossel{max-width:95%;}
 }
@@ -225,14 +214,13 @@ Cada foto aqui é um pedaço do que eu quero continuar vivendo com você.
 
 <div class="carrossel">
     <button class="nav left" onclick="anterior()">‹</button>
-    <img id="fotoA" class="foto ativa" src="foto1.jpg">
-    <img id="fotoB" class="foto">
+    <img id="fotoPrincipal" src="foto1.jpg">
     <button class="nav right" onclick="proxima()">›</button>
 </div>
 
 <div class="indicadores" id="indicadores"></div>
 
-<audio id="musica"></audio>
+<audio id="musica" src="suaslinhas.mp3"></audio>
 
 <div class="player">
     <button id="playPause">⏸️</button>
@@ -244,75 +232,8 @@ Desde 11.03.2022
 
 <script>
 
-/* ===== INICIALIZAÇÃO ===== */
+/* ===== ESTRELAS ===== */
 
-document.addEventListener("DOMContentLoaded", function(){
-
-const musica = document.getElementById("musica");
-const playPause = document.getElementById("playPause");
-const botao = document.getElementById("botaoEntrar");
-const entrada = document.getElementById("entrada");
-
-musica.src="suaslinhas.mp3";
-
-/* Fade-in da música */
-function fadeInAudio(){
-    musica.volume=0;
-    musica.play();
-    let vol=0;
-    let fade=setInterval(()=>{
-        if(vol<1){
-            vol+=0.05;
-            musica.volume=vol;
-        } else clearInterval(fade);
-    },200);
-}
-
-/* 💖 Corações variados */
-function soltarCoracoes(){
-
-  const emojis=["❤️","💖","💘","💝","💕","💗","💞"];
-
-  for(let i=0;i<30;i++){
-
-    const c=document.createElement("div");
-    c.className="coracao";
-    c.innerText=emojis[Math.floor(Math.random()*emojis.length)];
-
-    c.style.left=Math.random()*100+"vw";
-    c.style.bottom=(Math.random()*40-20)+"px";
-
-    const duracao=5+Math.random()*5;
-    c.style.animationDuration=duracao+"s";
-    c.style.animationDelay=Math.random()*2+"s";
-
-    const deslocamento=(Math.random()*100-50)+"px";
-    c.style.setProperty("--deslocamento",deslocamento);
-
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),duracao*1000+2000);
-  }
-}
-
-botao.addEventListener("click", function(){
-  soltarCoracoes();
-  setTimeout(()=>{
-      entrada.style.display="none";
-      fadeInAudio();
-  },1200);
-});
-
-playPause.addEventListener("click", function(){
-  if(musica.paused){
-      musica.play();
-      playPause.innerText="⏸️";
-  } else {
-      musica.pause();
-      playPause.innerText="▶️";
-  }
-});
-
-/* Estrelas */
 for(let i=0;i<40;i++){
   const e=document.createElement("div");
   e.className="estrela";
@@ -322,9 +243,62 @@ for(let i=0;i<40;i++){
   document.body.appendChild(e);
 }
 
-});
+/* ===== MÚSICA + ENTRADA ===== */
 
-/* ===== CARROSSEL ===== */
+const musica=document.getElementById("musica");
+const playPause=document.getElementById("playPause");
+const botao=document.getElementById("botaoEntrar");
+const entrada=document.getElementById("entrada");
+
+function fadeInAudio(){
+  musica.volume=0;
+  musica.play();
+  let vol=0;
+  let fade=setInterval(()=>{
+    if(vol<1){
+      vol+=0.05;
+      musica.volume=vol;
+    } else clearInterval(fade);
+  },200);
+}
+
+function soltarCoracoes(){
+  const emojis=["❤️","💖","💘","💝","💕","💗","💞"];
+  for(let i=0;i<30;i++){
+    const c=document.createElement("div");
+    c.className="coracao";
+    c.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+    c.style.left=Math.random()*100+"vw";
+    c.style.bottom=(Math.random()*40-20)+"px";
+    const duracao=5+Math.random()*5;
+    c.style.animationDuration=duracao+"s";
+    c.style.animationDelay=Math.random()*2+"s";
+    const deslocamento=(Math.random()*100-50)+"px";
+    c.style.setProperty("--deslocamento",deslocamento);
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),duracao*1000+2000);
+  }
+}
+
+botao.onclick=function(){
+  soltarCoracoes();
+  setTimeout(()=>{
+    entrada.style.display="none";
+    fadeInAudio();
+  },1200);
+};
+
+playPause.onclick=function(){
+  if(musica.paused){
+    musica.play();
+    playPause.innerText="⏸️";
+  } else {
+    musica.pause();
+    playPause.innerText="▶️";
+  }
+};
+
+/* ===== CARROSSEL ESTÁVEL ===== */
 
 const fotos=[
 "foto1.jpg","foto2.jpeg","foto3.jpeg","foto4.jpeg",
@@ -334,9 +308,24 @@ const fotos=[
 ];
 
 let indice=0;
-let intervalo;
-let usandoA=true;
-let animando=false;
+let timeout;
+let pronto=false;
+const img=document.getElementById("fotoPrincipal");
+
+function preload(lista){
+  let count=0;
+  lista.forEach(src=>{
+    const i=new Image();
+    i.src=src;
+    i.onload=()=>{
+      count++;
+      if(count===lista.length){
+        pronto=true;
+        iniciarAutoplay();
+      }
+    }
+  });
+}
 
 function atualizarIndicadores(){
   const pontos=document.querySelectorAll(".ponto");
@@ -344,68 +333,50 @@ function atualizarIndicadores(){
   pontos[indice].classList.add("ativo");
 }
 
-function atualizarFoto(){
-
-  if(animando) return;
-  animando=true;
-
-  const fotoA=document.getElementById("fotoA");
-  const fotoB=document.getElementById("fotoB");
-
-  if(usandoA){
-    fotoB.src=fotos[indice];
-    fotoB.classList.add("ativa");
-    fotoA.classList.remove("ativa");
-  } else {
-    fotoA.src=fotos[indice];
-    fotoA.classList.add("ativa");
-    fotoB.classList.remove("ativa");
-  }
-
-  usandoA=!usandoA;
-  atualizarIndicadores();
-
+function trocar(novo){
+  if(!pronto) return;
+  img.style.opacity=0;
   setTimeout(()=>{
-    animando=false;
-  },800); // mesmo tempo da transição CSS
+    indice=novo;
+    img.src=fotos[indice];
+    atualizarIndicadores();
+    img.style.opacity=1;
+  },300);
 }
 
 function proxima(){
-  indice=(indice+1)%fotos.length;
-  atualizarFoto();
+  trocar((indice+1)%fotos.length);
+  reiniciar();
 }
 
 function anterior(){
-  indice=(indice-1+fotos.length)%fotos.length;
-  atualizarFoto();
+  trocar((indice-1+fotos.length)%fotos.length);
+  reiniciar();
 }
 
 function iniciarAutoplay(){
-  intervalo=setInterval(()=>{
+  timeout=setTimeout(()=>{
     proxima();
-  },5000); // aumentei para 5s (mais suave)
+  },5000);
 }
 
-function pararAutoplay(){
-  clearInterval(intervalo);
+function reiniciar(){
+  clearTimeout(timeout);
+  iniciarAutoplay();
 }
 
 window.onload=function(){
-
   const indicadores=document.getElementById("indicadores");
   fotos.forEach(()=>{
     const ponto=document.createElement("span");
     ponto.className="ponto";
     indicadores.appendChild(ponto);
   });
-
   atualizarIndicadores();
-  iniciarAutoplay();
+  preload(fotos);
 };
-
 
 </script>
 
 </body>
 </html>
-
