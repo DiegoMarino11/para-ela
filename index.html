@@ -3,30 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🌙</text></svg>">
-    
+
 <title>Para Luana ❤️</title>
 
 <style>
 
-/* ===== FUNDO ===== */
+/* ===== FUNDO CINEMATOGRÁFICO ===== */
 
 body{
     margin:0;
-    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-    background-size: 400% 400%;
-    animation: fundoAnimado 18s ease infinite;
+    background: radial-gradient(circle at center, #1c2733 0%, #0b0f14 60%, #05070a 100%);
     font-family: Arial, sans-serif;
     color:white;
     text-align:center;
     overflow-x:hidden;
+    animation: fadeInPage 1.8s ease;
 }
 
-@keyframes fundoAnimado{
-    0%{ background-position:0% 50%; }
-    50%{ background-position:100% 50%; }
-    100%{ background-position:0% 50%; }
+@keyframes fadeInPage{
+    from{opacity:0}
+    to{opacity:1}
+}
+
+/* Vinheta nas bordas */
+
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:radial-gradient(circle, transparent 60%, rgba(0,0,0,0.5));
+    pointer-events:none;
 }
 
 /* ===== ESTRELAS ===== */
@@ -52,7 +60,7 @@ body{
 #entrada{
     position:fixed;
     inset:0;
-    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    background:radial-gradient(circle at center, #1c2733 0%, #0b0f14 70%, #05070a 100%);
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -77,9 +85,10 @@ body{
 /* ===== TEXTOS ===== */
 
 h1{
-    margin-top:30px;
+    margin-top:40px;
     font-size:32px;
     font-weight:600;
+    text-shadow:0 10px 25px rgba(0,0,0,0.7);
 }
 
 .frase{
@@ -96,8 +105,23 @@ h1{
     position:relative;
     width:100%;
     max-width:480px;
-    margin:0 auto 20px;
+    margin:0 auto 30px;
     aspect-ratio:3/4;
+}
+
+/* Halo de luz atrás */
+
+.carrossel::before{
+    content:"";
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:130%;
+    height:130%;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
+    border-radius:50%;
+    z-index:-1;
 }
 
 .carrossel img{
@@ -111,27 +135,29 @@ h1{
     transition:opacity 0.4s ease;
 }
 
+/* ===== SETAS ===== */
+
 .nav{
     position:absolute;
     top:50%;
     transform:translateY(-50%);
-    background:rgba(0,0,0,0.5);
+    background:rgba(0,0,0,0.6);
     color:white;
     border:none;
-    font-size:24px;
+    font-size:22px;
     padding:8px 14px;
     cursor:pointer;
     border-radius:50%;
     z-index:10;
 }
 
-.nav.left{ left:10px; }
-.nav.right{ right:10px; }
+.nav.left{ left:12px; }
+.nav.right{ right:12px; }
 
 /* ===== INDICADORES ===== */
 
 .indicadores{
-    margin-top:10px;
+    margin-top:12px;
 }
 
 .ponto{
@@ -152,7 +178,7 @@ h1{
 /* ===== MAPA ===== */
 
 .mapa-section{
-    margin:60px auto 40px;
+    margin:70px auto 40px;
     max-width:600px;
     padding:0 15px;
 }
@@ -160,16 +186,11 @@ h1{
 .mapa-img{
     width:100%;
     border-radius:18px;
-    box-shadow:0 15px 30px rgba(0,0,0,0.4);
-    transition:transform 0.6s ease;
-}
-
-.mapa-img:hover{
-    transform:scale(1.02);
+    box-shadow:0 20px 40px rgba(0,0,0,0.6);
 }
 
 .mapa-frase{
-    margin-top:18px;
+    margin-top:20px;
     font-size:18px;
     opacity:0.9;
     font-style:italic;
@@ -178,17 +199,17 @@ h1{
 /* ===== PLAYER ===== */
 
 .player{
-    margin-top:40px; /* sobe ele */
+    margin-top:50px;
     display:flex;
     justify-content:center;
 }
 
 .player-box{
-    backdrop-filter:blur(10px);
+    backdrop-filter:blur(12px);
     background:rgba(255,255,255,0.08);
     padding:18px 28px;
     border-radius:40px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+    box-shadow:0 15px 35px rgba(0,0,0,0.5);
 }
 
 .play-btn{
@@ -207,8 +228,6 @@ h1{
     transform:scale(1.08);
 }
 
-/* Pulsação quando tocando */
-
 .playing{
     animation:pulse 1.8s infinite;
 }
@@ -218,7 +237,6 @@ h1{
     70%{box-shadow:0 0 0 15px rgba(255,255,255,0);}
     100%{box-shadow:0 0 0 0 rgba(255,255,255,0);}
 }
-
 
 /* ===== CORAÇÕES ===== */
 
@@ -243,7 +261,7 @@ h1{
 /* ===== RODAPÉ ===== */
 
 .rodape{
-    margin:40px 0 20px;
+    margin:50px 0 20px;
     font-size:14px;
     opacity:0.6;
 }
@@ -260,207 +278,3 @@ h1{
 </head>
 
 <body>
-
-<div id="entrada">
-  <h2>Antes de continuar…</h2>
-  <p>tem algo aqui que eu fiz pensando em você</p>
-  <button id="botaoEntrar">Entrar</button>
-</div>
-
-<h1>Eu te escolhi. E continuo escolhendo.</h1>
-
-<p class="frase">
-Cada foto aqui é um pedaço do que eu quero continuar vivendo com você.
-</p>
-
-<div class="carrossel">
-    <button class="nav left" onclick="anterior()">‹</button>
-    <img id="fotoPrincipal" src="foto1.jpg">
-    <button class="nav right" onclick="proxima()">›</button>
-</div>
-
-<div class="indicadores" id="indicadores"></div>
-
-<!-- ===== MAPA ===== -->
-
-<div class="mapa-section">
-    <img src="local.jpg" alt="Onde tudo começou" class="mapa-img">
-    <p class="mapa-frase">
-        Foi aqui que meus olhos encontraram os seus pela primeira vez.
-        E foi aqui que eu entendi que nenhum outro sorriso teria espaço depois do seu.
-        Não por escolha forçada — mas porque, desde aquele dia, nenhum outro olhar consegue me atravessar do mesmo jeito.
-    </p>
-</div>
-
-<audio id="musica" src="suaslinhas.mp3"></audio>
-
-<div class="player">
-    <div class="player-box">
-        <button id="playPause" class="play-btn">⏸</button>
-    </div>
-</div>
-
-
-<div class="rodape">
-Desde 11.03.2022
-</div>
-
-<script>
-
-/* ===== ESTRELAS ===== */
-
-for(let i=0;i<40;i++){
-  const e=document.createElement("div");
-  e.className="estrela";
-  e.style.top=Math.random()*100+"vh";
-  e.style.left=Math.random()*100+"vw";
-  e.style.animationDuration=(2+Math.random()*4)+"s";
-  document.body.appendChild(e);
-}
-
-/* ===== MÚSICA + ENTRADA ===== */
-
-const musica=document.getElementById("musica");
-const playPause=document.getElementById("playPause");
-const botao=document.getElementById("botaoEntrar");
-const entrada=document.getElementById("entrada");
-
-function fadeInAudio(){
-  musica.volume=0;
-  musica.play();
-    playPause.classList.add("playing");
-  let vol=0;
-  let fade=setInterval(()=>{
-    if(vol<1){
-      vol+=0.05;
-      musica.volume=vol;
-    } else clearInterval(fade);
-  },200);
-}
-
-function soltarCoracoes(){
-  const emojis=["❤️","💖","💘","💝","💕","💗","💞"];
-  for(let i=0;i<30;i++){
-    const c=document.createElement("div");
-    c.className="coracao";
-    c.innerText=emojis[Math.floor(Math.random()*emojis.length)];
-    c.style.left=Math.random()*100+"vw";
-    c.style.bottom=(Math.random()*40-20)+"px";
-    const duracao=5+Math.random()*5;
-    c.style.animationDuration=duracao+"s";
-    c.style.animationDelay=Math.random()*2+"s";
-    const deslocamento=(Math.random()*100-50)+"px";
-    c.style.setProperty("--deslocamento",deslocamento);
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),duracao*1000+2000);
-  }
-}
-
-botao.onclick=function(){
-  soltarCoracoes();
-  setTimeout(()=>{
-    entrada.style.display="none";
-    fadeInAudio();
-  },1200);
-};
-
-playPause.onclick=function(){
-  if(musica.paused){
-    musica.play();
-    playPause.innerText="⏸";
-    playPause.classList.add("playing");
-  } else {
-    musica.pause();
-    playPause.innerText="▶";
-    playPause.classList.remove("playing");
-  }
-};
-
-/* ===== CARROSSEL ESTÁVEL ===== */
-
-const fotos=[
-"foto1.jpg","foto2.jpeg","foto3.jpeg","foto4.jpeg",
-"foto5.jpeg","foto6.jpeg","foto7.jpeg","foto8.jpeg",
-"foto9.jpeg","foto10.jpeg","foto11.jpeg","foto12.jpeg",
-"foto13.jpeg","foto14.jpeg","foto15.jpeg","foto16.jpeg","foto17.jpeg"
-];
-
-let indice=0;
-let timeout;
-let pronto=false;
-const img=document.getElementById("fotoPrincipal");
-
-function preload(lista){
-  let count=0;
-  lista.forEach(src=>{
-    const i=new Image();
-    i.src=src;
-    i.onload=()=>{
-      count++;
-      if(count===lista.length){
-        pronto=true;
-        iniciarAutoplay();
-      }
-    }
-  });
-}
-
-function atualizarIndicadores(){
-  const pontos=document.querySelectorAll(".ponto");
-  pontos.forEach(p=>p.classList.remove("ativo"));
-  pontos[indice].classList.add("ativo");
-}
-
-function trocar(novo){
-  if(!pronto) return;
-  img.style.opacity=0;
-  setTimeout(()=>{
-    indice=novo;
-    img.src=fotos[indice];
-    atualizarIndicadores();
-    img.style.opacity=1;
-  },300);
-}
-
-function proxima(){
-  trocar((indice+1)%fotos.length);
-  reiniciar();
-}
-
-function anterior(){
-  trocar((indice-1+fotos.length)%fotos.length);
-  reiniciar();
-}
-
-function iniciarAutoplay(){
-  timeout=setTimeout(()=>{
-    proxima();
-  },5000);
-}
-
-function reiniciar(){
-  clearTimeout(timeout);
-  iniciarAutoplay();
-}
-
-window.onload=function(){
-  const indicadores=document.getElementById("indicadores");
-  fotos.forEach(()=>{
-    const ponto=document.createElement("span");
-    ponto.className="ponto";
-    indicadores.appendChild(ponto);
-  });
-  atualizarIndicadores();
-  preload(fotos);
-};
-
-</script>
-
-</body>
-</html>
-
-
-
-
-
-
