@@ -19,21 +19,15 @@ body{
     color:white;
     text-align:center;
     overflow-x:hidden;
-    animation: fadeInPage 1.5s ease;
 }
 
-@keyframes fadeInPage{
-    from{opacity:0}
-    to{opacity:1}
-}
-
-/* Vinheta suave */
+/* Vinheta */
 
 body::after{
     content:"";
     position:fixed;
     inset:0;
-    background:radial-gradient(circle, transparent 60%, rgba(0,0,0,0.5));
+    background:radial-gradient(circle, transparent 60%, rgba(0,0,0,0.6));
     pointer-events:none;
 }
 
@@ -42,7 +36,7 @@ body::after{
 #entrada{
     position:fixed;
     inset:0;
-    background:radial-gradient(circle at center, #1c2733 0%, #0b0f14 70%, #05070a 100%);
+    background: radial-gradient(circle at center, #1c2733 0%, #0b0f14 70%, #05070a 100%);
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -60,22 +54,19 @@ body::after{
     margin-top:20px;
     background:white;
     color:#203a43;
-    width:200px;
-    max-width:80%;
 }
 
 /* ===== TEXTOS ===== */
 
 h1{
-    margin-top:40px;
+    margin-top:50px;
     font-size:32px;
     font-weight:600;
-    text-shadow:0 10px 25px rgba(0,0,0,0.7);
 }
 
 .frase{
     opacity:0.9;
-    margin:20px auto 30px;
+    margin:20px auto 40px;
     font-size:18px;
     max-width:600px;
     padding:0 15px;
@@ -87,23 +78,8 @@ h1{
     position:relative;
     width:100%;
     max-width:480px;
-    margin:0 auto 30px;
+    margin:0 auto 20px;
     aspect-ratio:3/4;
-}
-
-/* Halo de luz */
-
-.carrossel::before{
-    content:"";
-    position:absolute;
-    top:50%;
-    left:50%;
-    width:130%;
-    height:130%;
-    transform:translate(-50%,-50%);
-    background:radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
-    border-radius:50%;
-    z-index:-1;
 }
 
 .carrossel img{
@@ -131,8 +107,30 @@ h1{
     z-index:10;
 }
 
-.nav.left{ left:12px; }
-.nav.right{ right:12px; }
+.nav.left{ left:10px; }
+.nav.right{ right:10px; }
+
+/* ===== MAPA ===== */
+
+.mapa-section{
+    margin:60px auto;
+    max-width:600px;
+    padding:0 15px;
+}
+
+.mapa-img{
+    width:100%;
+    border-radius:18px;
+    box-shadow:0 15px 30px rgba(0,0,0,0.4);
+}
+
+.mapa-frase{
+    margin-top:20px;
+    font-size:18px;
+    opacity:0.9;
+    font-style:italic;
+    line-height:1.6;
+}
 
 /* ===== PLAYER ===== */
 
@@ -147,7 +145,6 @@ h1{
     background:rgba(255,255,255,0.08);
     padding:18px 28px;
     border-radius:40px;
-    box-shadow:0 15px 35px rgba(0,0,0,0.5);
 }
 
 .play-btn{
@@ -159,11 +156,6 @@ h1{
     cursor:pointer;
     background:white;
     color:#203a43;
-    transition:0.3s ease;
-}
-
-.play-btn:hover{
-    transform:scale(1.08);
 }
 
 .playing{
@@ -176,25 +168,7 @@ h1{
     100%{box-shadow:0 0 0 0 rgba(255,255,255,0);}
 }
 
-/* ===== CORAÇÕES ===== */
-
-.coracao{
-    position:fixed;
-    font-size:22px;
-    pointer-events:none;
-    animation:subir linear forwards;
-}
-
-@keyframes subir{
-    0%{transform:translateY(0) rotate(0deg);opacity:1;}
-    100%{transform:translateY(-120vh) rotate(360deg);opacity:0;}
-}
-
-.rodape{
-    margin:50px 0 20px;
-    font-size:14px;
-    opacity:0.6;
-}
+/* ===== RESPONSIVO ===== */
 
 @media(max-width:768px){
   h1{font-size:26px;}
@@ -219,10 +193,23 @@ h1{
 Cada foto aqui é um pedaço do que eu quero continuar vivendo com você.
 </p>
 
+<!-- CARROSSEL -->
+
 <div class="carrossel">
     <button class="nav left" onclick="anterior()">‹</button>
     <img id="fotoPrincipal" src="foto1.jpg">
     <button class="nav right" onclick="proxima()">›</button>
+</div>
+
+<!-- MAPA -->
+
+<div class="mapa-section">
+    <img src="local.jpg" alt="Onde tudo começou" class="mapa-img">
+    <p class="mapa-frase">
+        Foi aqui que meus olhos encontraram os seus pela primeira vez.
+        E foi ali que descobri um sorriso que não me deixa espaço para procurar outros.
+        Desde aquele instante, nenhum outro olhar me atravessa do mesmo jeito.
+    </p>
 </div>
 
 <audio id="musica" src="suaslinhas.mp3"></audio>
@@ -231,10 +218,6 @@ Cada foto aqui é um pedaço do que eu quero continuar vivendo com você.
     <div class="player-box">
         <button id="playPause" class="play-btn">⏸</button>
     </div>
-</div>
-
-<div class="rodape">
-Desde 11.03.2022
 </div>
 
 <script>
@@ -274,6 +257,8 @@ playPause.onclick=function(){
   }
 };
 
+/* ===== CARROSSEL ===== */
+
 const fotos=[
 "foto1.jpg","foto2.jpeg","foto3.jpeg","foto4.jpeg",
 "foto5.jpeg","foto6.jpeg","foto7.jpeg","foto8.jpeg",
@@ -286,13 +271,23 @@ const img=document.getElementById("fotoPrincipal");
 
 function proxima(){
   indice=(indice+1)%fotos.length;
-  img.src=fotos[indice];
+  img.style.opacity=0;
+  setTimeout(()=>{
+    img.src=fotos[indice];
+    img.style.opacity=1;
+  },200);
 }
 
 function anterior(){
   indice=(indice-1+fotos.length)%fotos.length;
-  img.src=fotos[indice];
+  img.style.opacity=0;
+  setTimeout(()=>{
+    img.src=fotos[indice];
+    img.style.opacity=1;
+  },200);
 }
+
+setInterval(proxima,5000);
 
 </script>
 
