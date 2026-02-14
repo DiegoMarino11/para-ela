@@ -19,7 +19,7 @@ body{
     color:white;
     text-align:center;
     overflow-x:hidden;
-    animation: fadeInPage 1.8s ease;
+    animation: fadeInPage 1.5s ease;
 }
 
 @keyframes fadeInPage{
@@ -27,7 +27,7 @@ body{
     to{opacity:1}
 }
 
-/* Vinheta nas bordas */
+/* Vinheta suave */
 
 body::after{
     content:"";
@@ -35,24 +35,6 @@ body::after{
     inset:0;
     background:radial-gradient(circle, transparent 60%, rgba(0,0,0,0.5));
     pointer-events:none;
-}
-
-/* ===== ESTRELAS ===== */
-
-.estrela{
-    position:fixed;
-    width:2px;
-    height:2px;
-    background:white;
-    opacity:0.3;
-    border-radius:50%;
-    animation: piscar 4s infinite ease-in-out;
-    pointer-events:none;
-}
-
-@keyframes piscar{
-    0%,100%{opacity:0.2}
-    50%{opacity:0.8}
 }
 
 /* ===== TELA INICIAL ===== */
@@ -109,7 +91,7 @@ h1{
     aspect-ratio:3/4;
 }
 
-/* Halo de luz atrás */
+/* Halo de luz */
 
 .carrossel::before{
     content:"";
@@ -135,8 +117,6 @@ h1{
     transition:opacity 0.4s ease;
 }
 
-/* ===== SETAS ===== */
-
 .nav{
     position:absolute;
     top:50%;
@@ -153,48 +133,6 @@ h1{
 
 .nav.left{ left:12px; }
 .nav.right{ right:12px; }
-
-/* ===== INDICADORES ===== */
-
-.indicadores{
-    margin-top:12px;
-}
-
-.ponto{
-    display:inline-block;
-    width:8px;
-    height:8px;
-    margin:4px;
-    background:rgba(255,255,255,0.4);
-    border-radius:50%;
-    transition:0.3s;
-}
-
-.ponto.ativo{
-    background:white;
-    transform:scale(1.2);
-}
-
-/* ===== MAPA ===== */
-
-.mapa-section{
-    margin:70px auto 40px;
-    max-width:600px;
-    padding:0 15px;
-}
-
-.mapa-img{
-    width:100%;
-    border-radius:18px;
-    box-shadow:0 20px 40px rgba(0,0,0,0.6);
-}
-
-.mapa-frase{
-    margin-top:20px;
-    font-size:18px;
-    opacity:0.9;
-    font-style:italic;
-}
 
 /* ===== PLAYER ===== */
 
@@ -248,25 +186,15 @@ h1{
 }
 
 @keyframes subir{
-    0%{
-        transform:translateY(0) translateX(0) rotate(0deg);
-        opacity:1;
-    }
-    100%{
-        transform:translateY(-120vh) translateX(var(--deslocamento)) rotate(360deg);
-        opacity:0;
-    }
+    0%{transform:translateY(0) rotate(0deg);opacity:1;}
+    100%{transform:translateY(-120vh) rotate(360deg);opacity:0;}
 }
-
-/* ===== RODAPÉ ===== */
 
 .rodape{
     margin:50px 0 20px;
     font-size:14px;
     opacity:0.6;
 }
-
-/* ===== RESPONSIVO ===== */
 
 @media(max-width:768px){
   h1{font-size:26px;}
@@ -278,3 +206,95 @@ h1{
 </head>
 
 <body>
+
+<div id="entrada">
+  <h2>Antes de continuar…</h2>
+  <p>tem algo aqui que eu fiz pensando em você</p>
+  <button id="botaoEntrar">Entrar</button>
+</div>
+
+<h1>Eu te escolhi. E continuo escolhendo.</h1>
+
+<p class="frase">
+Cada foto aqui é um pedaço do que eu quero continuar vivendo com você.
+</p>
+
+<div class="carrossel">
+    <button class="nav left" onclick="anterior()">‹</button>
+    <img id="fotoPrincipal" src="foto1.jpg">
+    <button class="nav right" onclick="proxima()">›</button>
+</div>
+
+<audio id="musica" src="suaslinhas.mp3"></audio>
+
+<div class="player">
+    <div class="player-box">
+        <button id="playPause" class="play-btn">⏸</button>
+    </div>
+</div>
+
+<div class="rodape">
+Desde 11.03.2022
+</div>
+
+<script>
+
+const musica=document.getElementById("musica");
+const playPause=document.getElementById("playPause");
+const botao=document.getElementById("botaoEntrar");
+const entrada=document.getElementById("entrada");
+
+function fadeInAudio(){
+  musica.volume=0;
+  musica.play();
+  playPause.classList.add("playing");
+  let vol=0;
+  let fade=setInterval(()=>{
+    if(vol<1){
+      vol+=0.05;
+      musica.volume=vol;
+    } else clearInterval(fade);
+  },200);
+}
+
+botao.onclick=function(){
+  entrada.style.display="none";
+  fadeInAudio();
+};
+
+playPause.onclick=function(){
+  if(musica.paused){
+    musica.play();
+    playPause.innerText="⏸";
+    playPause.classList.add("playing");
+  } else {
+    musica.pause();
+    playPause.innerText="▶";
+    playPause.classList.remove("playing");
+  }
+};
+
+const fotos=[
+"foto1.jpg","foto2.jpeg","foto3.jpeg","foto4.jpeg",
+"foto5.jpeg","foto6.jpeg","foto7.jpeg","foto8.jpeg",
+"foto9.jpeg","foto10.jpeg","foto11.jpeg","foto12.jpeg",
+"foto13.jpeg","foto14.jpeg","foto15.jpeg","foto16.jpeg","foto17.jpeg"
+];
+
+let indice=0;
+const img=document.getElementById("fotoPrincipal");
+
+function proxima(){
+  indice=(indice+1)%fotos.length;
+  img.src=fotos[indice];
+}
+
+function anterior(){
+  indice=(indice-1+fotos.length)%fotos.length;
+  img.src=fotos[indice];
+}
+
+</script>
+
+</body>
+</html>
