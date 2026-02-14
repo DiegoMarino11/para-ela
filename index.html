@@ -1,283 +1,25 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🌙</text></svg>">
-
-<title>Para Luana ❤️</title>
-
-<style>
-
-/* ===== FUNDO CINEMATOGRÁFICO ===== */
-
-body{
-    margin:0;
-    font-family: Arial, sans-serif;
-    color:white;
-    text-align:center;
-    overflow-x:hidden;
-    background: radial-gradient(circle at center, #1c2733 0%, #0b0f14 60%, #05070a 100%);
-}
-
-/* Vinheta */
-body::after{
-    content:"";
-    position:fixed;
-    inset:0;
-    background:radial-gradient(circle, transparent 60%, rgba(0,0,0,0.6));
-    pointer-events:none;
-}
-
-/* ===== TELA INICIAL ===== */
-
-#entrada{
-    position:fixed;
-    inset:0;
-    background: radial-gradient(circle at center, #1c2733 0%, #0b0f14 70%, #05070a 100%);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    z-index:9999;
-    padding:20px;
-}
-
-#botaoEntrar{
-    padding:15px 30px;
-    font-size:18px;
-    border:none;
-    border-radius:30px;
-    cursor:pointer;
-    margin-top:20px;
-    background:white;
-    color:#203a43;
-}
-
-/* ===== TEXTOS ===== */
-
-h1{
-    margin-top:50px;
-    font-size:32px;
-    font-weight:600;
-}
-
-.frase{
-    opacity:0.9;
-    margin:20px auto 40px;
-    font-size:18px;
-    max-width:600px;
-    padding:0 15px;
-}
-
-/* ===== CARROSSEL ===== */
-
-.carrossel{
-    position:relative;
-    width:100%;
-    max-width:480px;
-    margin:0 auto 20px;
-    aspect-ratio:3/4;
-}
-
-.carrossel img{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:contain;
-    background:rgba(0,0,0,0.25);
-    border-radius:18px;
-    opacity:0;
-    transition:opacity 0.8s ease;
-}
-
-.carrossel img.ativo{
-    opacity:1;
-    z-index:2;
-}
-
-.carrossel img.inativo{
-    z-index:1;
-}
-
-.nav{
-    position:absolute;
-    top:50%;
-    transform:translateY(-50%);
-    background:rgba(0,0,0,0.6);
-    color:white;
-    border:none;
-    font-size:22px;
-    padding:8px 14px;
-    cursor:pointer;
-    border-radius:50%;
-    z-index:10;
-}
-
-.nav.left{ left:10px; }
-.nav.right{ right:10px; }
-
-/* ===== MAPA ===== */
-
-.mapa-section{
-    margin:60px auto;
-    max-width:600px;
-    padding:0 15px;
-}
-
-.mapa-img{
-    width:100%;
-    border-radius:18px;
-    box-shadow:0 15px 30px rgba(0,0,0,0.4);
-}
-
-.mapa-frase{
-    margin-top:20px;
-    font-size:18px;
-    opacity:0.9;
-    font-style:italic;
-    line-height:1.6;
-}
-
-/* ===== PLAYER ===== */
-
-.player{
-    margin-top:50px;
-    display:flex;
-    justify-content:center;
-}
-
-.player-box{
-    backdrop-filter:blur(12px);
-    background:rgba(255,255,255,0.08);
-    padding:18px 28px;
-    border-radius:40px;
-}
-
-.play-btn{
-    width:60px;
-    height:60px;
-    border-radius:50%;
-    border:none;
-    font-size:22px;
-    cursor:pointer;
-    background:white;
-    color:#203a43;
-}
-
-.playing{
-    animation:pulse 1.8s infinite;
-}
-
-@keyframes pulse{
-    0%{box-shadow:0 0 0 0 rgba(255,255,255,0.6);}
-    70%{box-shadow:0 0 0 15px rgba(255,255,255,0);}
-    100%{box-shadow:0 0 0 0 rgba(255,255,255,0);}
-}
-
-/* ===== CORAÇÕES ===== */
-
-.coracao{
-    position:fixed;
-    font-size:22px;
-    pointer-events:none;
-    animation:subir linear forwards;
-}
-
-@keyframes subir{
-    0%{
-        transform:translateY(0) translateX(0) rotate(0deg);
-        opacity:1;
-    }
-    100%{
-        transform:translateY(-120vh) translateX(var(--deslocamento)) rotate(360deg);
-        opacity:0;
-    }
-}
-
-/* ===== RODAPÉ ===== */
-
-.rodape{
-    margin:40px 0 20px;
-    font-size:14px;
-    opacity:0.6;
-}
-
-/* ===== RESPONSIVO ===== */
-
-@media(max-width:768px){
-  h1{font-size:26px;}
-  .frase{font-size:16px;}
-  .carrossel{max-width:95%;}
-}
-
-</style>
-</head>
-
-<body>
-
-<div id="entrada">
-  <h2>Antes de continuar…</h2>
-  <p>tem algo aqui que eu fiz pensando em você</p>
-  <button id="botaoEntrar">Entrar</button>
-</div>
-
-<h1>Eu te escolhi. E continuo escolhendo.</h1>
-
-<p class="frase">
-Cada foto aqui é um pedaço do que eu quero continuar vivendo com você.
-</p>
-
-<div class="carrossel">
-    <button class="nav left" onclick="anterior()">‹</button>
-    <img id="imgA" src="foto1.jpg" class="ativo">
-    <img id="imgB" src="" class="inativo">
-
-    <button class="nav right" onclick="proxima()">›</button>
-</div>
-
-<div class="mapa-section">
-    <img src="local.jpg" class="mapa-img">
-    <p class="mapa-frase">
-        Foi aqui que meus olhos encontraram os seus pela primeira vez.
-        E foi ali que descobri um sorriso que não me deixa espaço para procurar outros.
-        Desde aquele instante, nenhum outro olhar me atravessa do mesmo jeito.
-    </p>
-</div>
-
-<audio id="musica" src="suaslinhas.mp3"></audio>
-
-<div class="player">
-    <div class="player-box">
-        <button id="playPause" class="play-btn">⏸</button>
-    </div>
-</div>
-
-<div class="rodape">
-Desde 11.03.2022
-</div>
-
 <script>
 
 /* ===== MÚSICA ===== */
 
-const musica=document.getElementById("musica");
-const playPause=document.getElementById("playPause");
-const botao=document.getElementById("botaoEntrar");
-const entrada=document.getElementById("entrada");
+const musica = document.getElementById("musica");
+const playPause = document.getElementById("playPause");
+const botao = document.getElementById("botaoEntrar");
+const entrada = document.getElementById("entrada");
 
 function fadeInAudio(){
-  musica.volume=0;
+  musica.volume = 0;
   musica.play();
   playPause.classList.add("playing");
-  let vol=0;
-  let fade=setInterval(()=>{
-    if(vol<1){
-      vol+=0.05;
-      musica.volume=vol;
-    } else clearInterval(fade);
+
+  let vol = 0;
+  let fade = setInterval(()=>{
+    if(vol < 1){
+      vol += 0.05;
+      musica.volume = vol;
+    } else {
+      clearInterval(fade);
+    }
   },200);
 }
 
@@ -318,7 +60,7 @@ playPause.onclick=function(){
   }
 };
 
-/* ===== CARROSSEL ===== */
+/* ===== CARROSSEL CROSSFADE REAL ===== */
 
 const fotos=[
 "foto1.jpg","foto2.jpeg","foto3.jpeg","foto4.jpeg",
@@ -327,32 +69,37 @@ const fotos=[
 "foto13.jpeg","foto14.jpeg","foto15.jpeg","foto16.jpeg","foto17.jpeg"
 ];
 
-let indice=0;
-const img=document.getElementById("fotoPrincipal");
+let indice = 0;
+let imgA = document.getElementById("imgA");
+let imgB = document.getElementById("imgB");
+let usandoA = true;
 
-function proxima(){
-  indice=(indice+1)%fotos.length;
-  img.style.opacity=0;
-  setTimeout(()=>{
-    img.src=fotos[indice];
-    img.style.opacity=1;
-  },200);
+function trocarImagem(novoIndice){
+
+  indice = novoIndice;
+
+  let atual = usandoA ? imgA : imgB;
+  let proxima = usandoA ? imgB : imgA;
+
+  proxima.src = fotos[indice];
+
+  proxima.classList.remove("inativo");
+  proxima.classList.add("ativo");
+
+  atual.classList.remove("ativo");
+  atual.classList.add("inativo");
+
+  usandoA = !usandoA;
+}
+
+function proximaFoto(){
+  trocarImagem((indice+1)%fotos.length);
 }
 
 function anterior(){
-  indice=(indice-1+fotos.length)%fotos.length;
-  img.style.opacity=0;
-  setTimeout(()=>{
-    img.src=fotos[indice];
-    img.style.opacity=1;
-  },200);
+  trocarImagem((indice-1+fotos.length)%fotos.length);
 }
 
-setInterval(proxima,5000);
+setInterval(proximaFoto,5000);
 
 </script>
-
-</body>
-</html>
-
-
