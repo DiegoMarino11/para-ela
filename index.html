@@ -325,6 +325,7 @@ const entrada=document.getElementById("entrada");
 function fadeInAudio(){
   musica.volume=0;
   musica.play();
+    playPause.classList.add("playing");
   let vol=0;
   let fade=setInterval(()=>{
     if(vol<1){
@@ -363,10 +364,12 @@ botao.onclick=function(){
 playPause.onclick=function(){
   if(musica.paused){
     musica.play();
-    playPause.innerText="⏸️";
+    playPause.innerText="⏸";
+    playPause.classList.add("playing");
   } else {
     musica.pause();
-    playPause.innerText="▶️";
+    playPause.innerText="▶";
+    playPause.classList.remove("playing");
   }
 };
 
@@ -452,6 +455,7 @@ window.onload=function(){
 
 </body>
 </html>
+
 
 
 
