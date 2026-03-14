@@ -172,6 +172,21 @@ h1{
     100%{box-shadow:0 0 0 0 rgba(255,255,255,0);}
 }
 
+/* ===== GIF ROMÂNTICO ===== */
+
+.gif-romantico{
+    width:70px;
+    margin:25px auto;
+    display:block;
+    animation:flutuar 3s ease-in-out infinite;
+}
+
+@keyframes flutuar{
+    0%{ transform:translateY(0px); }
+    50%{ transform:translateY(-6px); }
+    100%{ transform:translateY(0px); }
+}
+
 /* ===== CORAÇÕES ===== */
 
 .coracao{
@@ -250,7 +265,6 @@ Cada foto aqui é um pedaço do que eu quero continuar vivendo com você.
 
 <img src="stardew_moment.gif" class="gif-romantico">
 
-    
 <div class="rodape">
 Desde 11.03.2022
 </div>
@@ -315,7 +329,7 @@ playPause.onclick=function(){
   }
 };
 
-/* ===== CARROSSEL DEFINITIVO ===== */
+/* ===== CARROSSEL ===== */
 
 const fotos=[
 "foto1.jpg","foto2.jpeg","foto3.jpeg","foto4.jpeg",
